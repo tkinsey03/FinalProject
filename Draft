@@ -1,0 +1,37 @@
+# Required request
+import requests
+
+# function to request for data
+def weather_data(query):
+   # Personal API
+   api_key = "4646ea9a97a2595f3d2b9262a3f83a5d"
+   # how to obtain url for API
+   base_url = "http://api.openweathermap.org/data/2.5/weather?"
+   complete_url = base_url + "appid=" + api_key + "&" + query
+   # resonse
+   res=requests.get(complete_url);
+   return res.json();
+
+# how to display results
+def display_results(weathers,city):
+   print("{}'s temperature: {}°C ".format(city,weathers['main']['temp']))
+   print("Wind speed: {} m/s".format(weathers['wind']['speed']))
+   print("Description: {}".format(weathers['weather'][0]['description']))
+   print("Weather: {}".format(weathers['weather'][0]['main']))
+
+# main function
+def main():
+   # City name/ telling info
+   city=input('Enter city for weather info:')
+   print()
+   # try-except block
+   try:
+      query='q='+city;
+      w_data=weather_data(query);
+      display_results(w_data, city)
+      print()
+   except:
+      print('City not found, please try again.')
+
+if __name__=='__main__':
+   main()
